@@ -1,7 +1,6 @@
-import { Box, Button, Container, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material";
-import { List, ListItem, ListItemText } from "@mui/material";
+import { Box, Button, CircularProgress, Container, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material";
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
-import { getAllPlans } from "../api/actions";
+import { getAllPlans, runPlan } from "../api/actions";
 import React from "react";
 
 const Home = () => {
@@ -16,6 +15,30 @@ const Home = () => {
 
     fetchPlans();
   }, []);
+
+  const setPlanStatus = (plan, status) => {
+    const updatedPlans = plans.map((p) => {
+      if (p.id === plan.id) {
+        return { ...p, status };
+      }
+      return p;
+    });
+    setPlans(updatedPlans);
+  }
+
+  const handleRunPlan = async (plan) => {
+    setPlanStatus(plan, 'running');
+    await runPlan(plan.id).then(() => {
+      setPlanStatus(plan, null);
+    });
+  };
+
+  const renderStatusIcon = (status) => {
+    if (status === 'running') {
+      return <CircularProgress size={24} />;
+    }
+    return <PlayArrowIcon />;
+  }
 
   const PlanList = () => {
     // Assuming you have an array of plans
@@ -36,8 +59,8 @@ const Home = () => {
         {plans.map((plan, index) => (
           <TableRow key={index}>
           <TableCell align="left">
-            <Button variant="contained" color="primary">
-              <PlayArrowIcon />
+            <Button variant="contained" color={!plan.status ? "primary" : "secondary"} onClick={ () => (handleRunPlan(plan))}>
+              {renderStatusIcon(plan.status)}
             </Button>
           </TableCell>
           <TableCell component="th" scope="row">

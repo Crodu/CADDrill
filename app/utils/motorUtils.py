@@ -73,6 +73,7 @@ def isMotorBusy():
   return isPinBusy(coil[0]) or isPinBusy(coil[1])
 
 def resetMotor():
+  global currMotorPosition
   if isMotorBusy():
     motorInfo("Motor is busy")
     return
@@ -82,6 +83,7 @@ def resetMotor():
   motorInfo("Motor reset")
 
 def moveToPosition(motorId, position):
+  global currMotorPosition
   #check if motor is busy
   if isMotorBusy():
     motorInfo("Motor is busy")
@@ -102,7 +104,7 @@ def moveToPosition(motorId, position):
     while currMotorPosition[motorId] > position:
       step(coil[motorId])
       currMotorPosition[motorId] -= millsPerStep
-  motorInfo("Moved to position" + str(currMotorPosition[motorId]))
+  motorInfo("Moved to position " + str(currMotorPosition[motorId]))
 
 def drillHole():
   if isDrillBusy():

@@ -6,12 +6,12 @@ import { getConfig } from "../api/actions";
 
 
 function Config() {
-  const [config, setConfig] = useState({});
+  const [config, setConfig] = useState("Config...");
 
   React.useEffect(() => {
     const fetchPlans = async () => {
       const configs = await getConfig();
-      setConfig(configs.payload);
+      setConfig(JSON.stringify(configs.payload, null, 2));
     };
 
     fetchPlans();
@@ -34,14 +34,14 @@ function Config() {
       >
         <div>
           <textarea
-            value={JSON.stringify(config, null, 2)}
-            onChange={(e) => setConfig(JSON.parse(e.target.value))}
+            value={config}
+            onChange={(e) => setConfig(e.target.value)}
             style={{ width: '100%', height: '400px' }}
           />
         </div>
         <IconButton
           onClick={async () => {
-            const res = await updateConfig(config);
+            const res = await updateConfig(JSON.parse(config));
             console.log(res);
           }}
         >

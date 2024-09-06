@@ -47,6 +47,15 @@ const addPlan = async (planData, file) => {
   }
 };
 
-export { getAllPlans, addPlan, getConfig, updateConfig };
+const runPlan = async (planId) => {
+  try {
+    const response = await api.get(`/plans/run/${planId}`);
+    return response.data;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export { getAllPlans, addPlan, getConfig, updateConfig, runPlan };
 
 // export default getAllPlans;
