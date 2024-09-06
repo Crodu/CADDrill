@@ -27,6 +27,12 @@ def setupConfig(config):
   drillDelay = config["motor"]["drillDelay"]
   millsPerStep = config["motor"]["millsPerStep"]
   sleepTime = config["motor"]["sleepTime"]
+  coil[0].close()
+  coil[1].close()
+  dir[0].close()
+  dir[1].close()
+  drillCoil.close()
+  drillDir.close()
   coil = [DigitalOutputDevice(config["motor"]["coilPins"]["0"]), DigitalOutputDevice(config["motor"]["coilPins"]["1"])]
   dir = [DigitalOutputDevice(config["motor"]["directionPins"]["0"]), DigitalOutputDevice(config["motor"]["directionPins"]["1"])]
   drillCoil = DigitalOutputDevice(config["motor"]["coilPins"]["2"])
