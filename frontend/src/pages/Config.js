@@ -1,7 +1,7 @@
-import { Box, Container, IconButton, TextField, Typography } from '@mui/material';
+import { Box, Container, IconButton, Typography } from '@mui/material';
 import Check from '@mui/icons-material/Check';
 import React, { useState } from 'react';
-import { addPlan } from '../api/actions';
+import { updateConfig } from '../api/actions';
 import { getConfig } from "../api/actions";
 
 
@@ -10,8 +10,8 @@ function Config() {
 
   React.useEffect(() => {
     const fetchPlans = async () => {
-      const allPlans = await getConfig();
-      setConfig(allPlans.payload);
+      const configs = await getConfig();
+      setConfig(configs.payload);
     };
 
     fetchPlans();
@@ -33,8 +33,20 @@ function Config() {
         autoComplete="off"
       >
         <div>
-          
+          <textarea
+            value={JSON.stringify(config, null, 2)}
+            onChange={(e) => setConfig(JSON.parse(e.target.value))}
+            style={{ width: '100%', height: '400px' }}
+          />
         </div>
+        <IconButton
+          onClick={async () => {
+            const res = await updateConfig(config);
+            console.log(res);
+          }}
+        >
+          <Check />
+        </IconButton>
       </Box>
     </Container>
     

@@ -18,6 +18,15 @@ const getConfig = async () => {
   }
 }
 
+const updateConfig = async (configData) => {
+  try {
+    const response = await api.post('/config/', configData);
+    return response.data;
+  } catch (error) {
+    console.error(error);
+  }
+}
+
 const addPlan = async (planData, file) => {
   try {
     const formData = new FormData();
@@ -38,6 +47,6 @@ const addPlan = async (planData, file) => {
   }
 };
 
-export { getAllPlans, addPlan, getConfig };
+export { getAllPlans, addPlan, getConfig, updateConfig };
 
 // export default getAllPlans;

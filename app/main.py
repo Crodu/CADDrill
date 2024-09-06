@@ -68,3 +68,8 @@ def get_plans(q: Union[str, None] = None, db: Session = Depends(get_db)):
 def get_config():
     loaded_config = load_config()
     return {"payload": loaded_config}
+
+@app.post("/config")
+def update_config(new_config: dict):
+    replace_config(new_config)
+    return {"payload": new_config}
