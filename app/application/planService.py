@@ -9,9 +9,10 @@ class PlanService:
 
     def create_plan(self, user_data: dict, file) -> Plan:
         dxfFile = DXFProcessor(file.filename)
+        points = str(list(dxfFile.process_points()))
         print(dxfFile.process_rectangles())
-        print(list(dxfFile.process_points()))
-        user_data["hole_coords"] = str(list(dxfFile.process_points()))
+        print(points)
+        user_data["hole_coords"] = points
         user_data["size_x"] = dxfFile.process_rectangles()[0]
         user_data["size_y"] = dxfFile.process_rectangles()[1]
         return self.plan_repository.save(user_data)

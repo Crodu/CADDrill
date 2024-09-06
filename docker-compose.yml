@@ -2,6 +2,7 @@ version: '3.8'
 services:
   db:
     image: postgres:latest
+    restart: always
     environment:
       POSTGRES_DB: posterr
       POSTGRES_USER: root
