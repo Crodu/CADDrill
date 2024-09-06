@@ -11,10 +11,11 @@ from .infrastructure.planRepository import PlanRepository
 # from .infrastructure.userRepository import UserRepository
 # from .infrastructure.tweetRepository import TweetRepository
 from fastapi.middleware.cors import CORSMiddleware
-from .utils.motorUtils import executeRoutine
+from .utils.motorUtils import executeRoutine, setupConfig
 
 app = FastAPI()
 
+setupConfig(load_config())
 
 origins = [
     "http://localhost",
