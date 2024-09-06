@@ -42,7 +42,7 @@ def create_plan(name: str = Form(...), hole_diameter: float = Form(...), file: U
 def run_plan(plan_id: int, q: Union[str, None] = None, db: Session = Depends(get_db)):
     plan_service = PlanService(PlanRepository(db))
     plan_info = plan_service.get_plan(plan_id, q)
-    executeRoutine(0, json.loads(plan_info.hole_coords))
+    executeRoutine(json.loads(plan_info.hole_coords))
     return {"payload": plan_info, "item_id": plan_id, "q": q}
 
 # @app.post("/plans/add")
