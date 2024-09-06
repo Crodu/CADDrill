@@ -1,14 +1,14 @@
 from gpiozero import DigitalOutputDevice
 from time import sleep
 
-drillCoil = DigitalOutputDevice(18)
-drillDir = DigitalOutputDevice(25)
+drillCoil = None
+drillDir = None
 drillDepth = 10
 drillSleepTime = 0.01
 drillDelay = 0.5
 
-coil = [DigitalOutputDevice(14), DigitalOutputDevice(15)]
-dir = [DigitalOutputDevice(23), DigitalOutputDevice(24)]
+coil = []
+dir = []
 currMotorPosition = [0, 0]
 currDir = [0, 0]
 millsPerStep = 0.1
@@ -31,6 +31,7 @@ def setupConfig(config):
   dir = [DigitalOutputDevice(config["motor"]["directionPins"]["0"]), DigitalOutputDevice(config["motor"]["directionPins"]["1"])]
   drillCoil = DigitalOutputDevice(config["motor"]["coilPins"]["2"])
   drillDir = DigitalOutputDevice(config["motor"]["directionPins"]["2"])
+  motorInfo("Config loaded")
 
 def motorInfo(error_message):
   print(error_message)
