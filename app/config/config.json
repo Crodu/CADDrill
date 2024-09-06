@@ -1,0 +1,20 @@
+{
+  "api": {
+    "url": "http://localhost:3000"
+  },
+  "motor": {
+    "millsPerStep": 1.8,
+    "sleepTime": 0.01,
+    "coilPins": {
+      "0": 14,
+      "1": 15,
+      "2": 18
+    },
+    "directionPins": {
+      "0": 23,
+      "1": 24,
+      "2": 25
+    },
+    "drillDelay": 0.5
+  }
+}

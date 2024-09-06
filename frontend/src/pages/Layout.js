@@ -17,7 +17,7 @@ const Layout = () => {
 
   const drawer = (
       <List>
-        {['All Plans', 'Add Plan', 'Options'].map((text, index) => (
+        {['All Plans', 'Add Plan', 'Config'].map((text, index) => (
           <ListItem key={text}>
             <ListItemButton
               href={`/${index === 0 ? '' : text.toLowerCase().replace(' ', '')}`}

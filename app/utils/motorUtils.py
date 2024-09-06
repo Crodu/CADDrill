@@ -5,6 +5,7 @@ drillCoil = DigitalOutputDevice(18)
 drillDir = DigitalOutputDevice(25)
 drillDepth = 10
 drillSleepTime = 0.01
+drillDelay = 0.5
 
 coil = [DigitalOutputDevice(14), DigitalOutputDevice(15)]
 dir = [DigitalOutputDevice(23), DigitalOutputDevice(24)]
@@ -81,7 +82,7 @@ def drillHole():
     return
   for i in range(drillDepth):
     step(drillCoil)
-  sleep(0.5)
+  sleep(drillDelay)
   drillDir.on()
   for i in range(drillDepth):
     step(drillCoil)

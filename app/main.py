@@ -1,4 +1,5 @@
 import json
+from .config.config import load_config, replace_config
 from typing import Union
 from fastapi import FastAPI, Depends, UploadFile, File, Form
 from sqlalchemy.orm import Session
@@ -62,3 +63,8 @@ def get_plans(q: Union[str, None] = None, db: Session = Depends(get_db)):
     plan_service = PlanService(PlanRepository(db))
     plan_info = plan_service.get_all_plans(q)
     return {"payload": plan_info, "q": q}
+
+@app.get("/config")
+def get_config():
+    loaded_config = load_config()
+    return {"payload": loaded_config}
