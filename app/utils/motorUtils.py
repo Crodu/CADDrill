@@ -88,9 +88,10 @@ def drillHole():
   
   motorInfo("Drilled hole")
 
-def executeRoutine(motorId, positions):
+def executeRoutine(positions):
   for position in positions:
-    moveToPosition(motorId, position)
+    moveToPosition(0, position[0])
+    moveToPosition(1, position[1])
     drillHole()
   motorInfo("Routine executed")
 
