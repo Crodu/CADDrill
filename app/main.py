@@ -71,5 +71,5 @@ def get_config():
 
 @app.post("/config")
 def update_config(new_config: dict):
-    replace_config(new_config)
+    replace_config("config.json", new_config)
     return {"payload": new_config}
