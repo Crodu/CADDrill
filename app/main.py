@@ -33,10 +33,13 @@ app.add_middleware(
 )
 
 @app.post("/plans/add")
-def create_plan(name: str = Form(...), hole_diameter: float = Form(...), file: UploadFile = File(...), db: Session = Depends(get_db)):
+async def create_plan(name: str = Form(...), hole_diameter: float = Form(...), file: UploadFile = File(...), db: Session = Depends(get_db)):
     # print(name)
     # print(hole_diameter)
     # print(file)
+    file_location = f"files/{file.filename}"
+    with open(file_location, "wb+") as file_object:
+        file_object.write(file.file.read())
     plan_service = PlanService(PlanRepository(db))
     return plan_service.create_plan({"name": name, "hole_diameter": hole_diameter}, file)
 

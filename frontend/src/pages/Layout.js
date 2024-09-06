@@ -23,7 +23,7 @@ const Layout = () => {
               href={`/${index === 0 ? '' : text.toLowerCase().replace(' ', '')}`}
             >
               <ListItemIcon>
-                asd
+                <MenuIcon />
               </ListItemIcon>
               <ListItemText primary={text} />
             </ListItemButton>

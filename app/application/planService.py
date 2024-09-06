@@ -8,7 +8,8 @@ class PlanService:
         self.plan_repository = plan_repository
 
     def create_plan(self, user_data: dict, file) -> Plan:
-        dxfFile = DXFProcessor(file.filename)
+        print(file)
+        dxfFile = DXFProcessor(f"files/{file.filename}")
         points = str(list(dxfFile.process_points()))
         print(dxfFile.process_rectangles())
         print(points)
