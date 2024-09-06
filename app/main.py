@@ -22,6 +22,8 @@ origins = [
     "http://localhost:3000",
     "http://192.168.0.105:3000",
     "http://192.168.0.105",
+    "http://driller.local:3000",
+    "http://driller.local",
 ]
 
 app.add_middleware(
