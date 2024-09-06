@@ -27,10 +27,10 @@ def setupConfig(config):
   drillDelay = config["motor"]["drillDelay"]
   millsPerStep = config["motor"]["millsPerStep"]
   sleepTime = config["motor"]["sleepTime"]
-  coil = [DigitalOutputDevice(config["motor"]["coilPins"][0]), DigitalOutputDevice(config["motor"]["coilPins"][1])]
-  dir = [DigitalOutputDevice(config["motor"]["directionPins"][0]), DigitalOutputDevice(config["motor"]["directionPins"][1])]
-  drillCoil = DigitalOutputDevice(config["motor"]["coilPins"][2])
-  drillDir = DigitalOutputDevice(config["motor"]["directionPins"][2])
+  coil = [DigitalOutputDevice(config["motor"]["coilPins"]["0"]), DigitalOutputDevice(config["motor"]["coilPins"]["1"])]
+  dir = [DigitalOutputDevice(config["motor"]["directionPins"]["0"]), DigitalOutputDevice(config["motor"]["directionPins"]["1"])]
+  drillCoil = DigitalOutputDevice(config["motor"]["coilPins"]["2"])
+  drillDir = DigitalOutputDevice(config["motor"]["directionPins"]["2"])
 
 def motorInfo(error_message):
   print(error_message)
