@@ -9,6 +9,15 @@ const getAllPlans = async () => {
   }
 };
 
+const startMotorCalibration = async () => {
+  try {
+    const response = await api.get('/calibrateMotor');
+    return response.data;
+  } catch (error) {
+    console.error(error);
+  }
+}
+
 const getConfig = async () => {
   try {
     const response = await api.get('/config/');
@@ -56,6 +65,6 @@ const runPlan = async (planId) => {
   }
 };
 
-export { getAllPlans, addPlan, getConfig, updateConfig, runPlan };
+export { getAllPlans, addPlan, getConfig, updateConfig, runPlan, startMotorCalibration };
 
 // export default getAllPlans;

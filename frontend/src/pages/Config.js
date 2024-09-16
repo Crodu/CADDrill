@@ -1,8 +1,7 @@
 import { Box, Container, IconButton, Typography } from '@mui/material';
 import Check from '@mui/icons-material/Check';
 import React, { useState } from 'react';
-import { updateConfig } from '../api/actions';
-import { getConfig } from "../api/actions";
+import { updateConfig, getConfig, startMotorCalibration } from '../api/actions';
 
 
 function Config() {
@@ -23,6 +22,14 @@ function Config() {
         <Typography variant="h4" component="h1" sx={{ mb: 2 }}>
           Config
         </Typography>
+        <IconButton
+          onClick={() => {
+            console.log('Motor calibration started');
+            startMotorCalibration();
+          }}
+        >
+          <Typography variant="button">Start Motor Calibration</Typography>
+        </IconButton>
       </Box>
       <Box
         component="form"

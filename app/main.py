@@ -6,16 +6,26 @@ from sqlalchemy.orm import Session
 from .infrastructure.database import get_db
 from .application.planService import PlanService
 from .infrastructure.planRepository import PlanRepository
-# from .application.userService import UserService
-# from .application.tweetService import TweetService
-# from .infrastructure.userRepository import UserRepository
-# from .infrastructure.tweetRepository import TweetRepository
 from fastapi.middleware.cors import CORSMiddleware
-from .utils.motorUtils import executeRoutine, setupConfig
+from .utils.motorUtils import MotorController
+import multiprocessing
+from contextlib import asynccontextmanager
 
-app = FastAPI()
+# app = FastAPI()
 
-setupConfig(load_config())
+motor_controller = {}
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    
+    motor_controller = MotorController()
+    app.state.motor_controller = motor_controller
+    app.state.motor_controller.setupConfig(load_config())
+
+    yield
+    
+
+app = FastAPI(lifespan=lifespan)
 
 origins = [
     "http://localhost",
@@ -49,14 +59,9 @@ async def create_plan(name: str = Form(...), hole_diameter: float = Form(...), f
 def run_plan(plan_id: int, q: Union[str, None] = None, db: Session = Depends(get_db)):
     plan_service = PlanService(PlanRepository(db))
     plan_info = plan_service.get_plan(plan_id, q)
-    executeRoutine(json.loads(plan_info.hole_coords))
+    print(app.state.motor_controller.currMotorPosition)
+    app.state.motor_controller.executeRoutine(json.loads(plan_info.hole_coords))
     return {"payload": plan_info, "item_id": plan_id, "q": q}
-
-# @app.post("/plans/add")
-# def create_user(plan_data: dict, db: Session = Depends(get_db)):
-#     print(plan_data)
-#     user_service = PlanService(PlanRepository(db))
-#     return user_service.create_user(plan_data)
 
 @app.get("/plans/{plan_id}")
 def get_plan(plan_id: int, q: Union[str, None] = None, db: Session = Depends(get_db)):
@@ -77,5 +82,14 @@ def get_config():
 
 @app.post("/config")
 def update_config(new_config: dict):
-    replace_config("config.json", new_config)
+    replace_config("config.json", new_config, app.state.motor_controller)
     return {"payload": new_config}
+
+@app.get("/calibrateMotor")
+def calibrate_motor():
+    app.state.motor_controller.calibrateMotor()
+    return {"payload": app.state.motor_controller.getMotorInfo()}
+
+@app.get("/getMotorInfo")
+def get_motor_info():
+    return {"payload": app.state.motor_controller.getMotorInfo()}

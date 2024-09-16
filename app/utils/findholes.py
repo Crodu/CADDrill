@@ -1,6 +1,4 @@
 import ezdxf
-import Motor
-import Drill
 import time
 
 class DXFProcessor:
